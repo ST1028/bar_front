@@ -1,81 +1,38 @@
-# Nuxt 3 + Vuetify 3 Starter
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-![Starter Image](/public/starter.png)
-Nuxt 3 is now stable. Vuetify 3 is now stable. I will be updating this template as we go along. Feel free to open an issue if you have any questions or suggestions.
-This template here will get you up & running with adding the two together :)
+## Getting Started
 
-## Demo Here
-
-[Online Demo](https://vuetify3nuxt3starter.behonbaker.com)
-
-## How to use
-
-As time passes, I will be updating this template. It will grow with some more pages. It all started with the login & register pages. I may keep a running list of pages added here.
-
-### Pages
-
-<details>
-<summary>Click to see the pages added & planned</summary>
-
-- [x] Login
-- [x] Register
-- [x] Reset Password
-
-</details>
-
-### Run the app
-
-1. Install the deps
-
-```bash
-npm install
-```
-
-2. Run the app
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
 ```
 
-### Stuff used
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- NuxtJS
-- Nuxt Icon
-- Sass
-- Vuetify
-- kevinmarrec/nuxt-pwa
-- Vite Plugin Vuetify
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-### Custom Sass File
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `.scss` file that can be found in the `assets` folder have some gradients & other styles. They can be deleted or updated.
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-### ~~Helpers Folder~~ Utils Folder
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-The ~~helper~~ utils folder contains the custom stuff for the Vuetify plugin
+## Learn More
 
-#### Custom Icons - `customIcons.ts`
+To learn more about Next.js, take a look at the following resources:
 
-So I switched from the nuxt-icon module to the @iconify/vue component [here](https://docs.iconify.design/icon-components/vue/). It plays better with Vuetify with custom icons
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Here is a link to the docs for this [Creating a custom iconset](https://next.vuetifyjs.com/en/features/icon-fonts/#creating-a-custom-icon-set)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-#### Global Defaults - `defaults.ts`
+## Deploy on Vercel
 
-This file here just set global props on different vuetify components. You can learn more here [Global Configuration](https://next.vuetifyjs.com/en/features/global-configuration/)
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-#### Themes - `themes.ts`
-
-This file will hold all the different themes that you want to use in your app. Feel free to add more crazy schemes lol. Learn more here: [Vuetify Themes](https://next.vuetifyjs.com/en/features/theme/)
-
-#### Form Rules - Composable
-
-I added one composable for form rules. Add more here. You can even try integrating other validation packages like `yup` or `zod`
-
-#### Yup & Vee-Validate
-
-I will definitely be switching to vee-validate for dealing with forms.
-
-#### Icons
-
-The public folder contains a `favicon` & `icon`. Change these out for your app and be sure to tweak the pwa config inside the `nuxt.config` file to fit your app
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

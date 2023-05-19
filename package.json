@@ -1,22 +1,38 @@
 {
+  "name": "bar_front",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "reset": "rm -rf .nuxt node_modules .output package-lock.json && npm install",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@iconify/vue": "^4.1.1",
-    "@kevinmarrec/nuxt-pwa": "^0.17.0",
-    "@nuxtjs/google-fonts": "^3.0.0",
-    "nuxt": "3.3.3",
-    "sass": "^1.60.0",
-    "vuetify": "^3.1.12"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "vite-plugin-vuetify": "^1.0.2"
+    "@emotion/cache": "^11.10.8",
+    "@emotion/react": "^11.10.8",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.3",
+    "@types/node": "18.16.3",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "autoprefixer": "10.4.14",
+    "cookie": "^0.5.0",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.4",
+    "js-cookie": "^3.0.5",
+    "next": "13.3.4",
+    "nookies": "^2.5.2",
+    "postcss": "8.4.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.5.1",
+    "@types/js-cookie": "^3.0.3"
   }
 }
