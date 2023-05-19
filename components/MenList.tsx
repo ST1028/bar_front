@@ -5,6 +5,7 @@ import { Snackbar, Alert } from '@mui/material';
 import { Menu } from '@/src/types/Models/Menu';
 import MenuListItem from './MenuListItem';
 import { Friend } from '@/src/types/Models/Friend';
+import { useRouter } from 'next/router'
 
 interface MenuCardProps {
   menus: Menu[];
@@ -14,14 +15,18 @@ interface MenuCardProps {
 export default function AlignItemsList({ menus, friends }: MenuCardProps) {
   const [open, setOpen] = React.useState(false);
   const [selectedMenu, setSelectedMenu] = React.useState<Menu | null>(null);
+  const router = useRouter()
 
   const handleClickOpen = (menu: Menu) => {
-    setOpen(true);
+    if (friends.length === 0) {
+      router.push('/friends')
+      return;
+    }
     setSelectedMenu(menu);
+    setOpen(true);
   };
   const handleClose = (isSnackBar: boolean = false) => {
     if (isSnackBar) {
-      console.log(isSnackBar);
       setSnackBarOpen(true);
     }
     setOpen(false);
