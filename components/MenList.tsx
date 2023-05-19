@@ -6,6 +6,7 @@ import { Menu } from '@/src/types/Models/Menu';
 import MenuListItem from './MenuListItem';
 import { Friend } from '@/src/types/Models/Friend';
 import { useRouter } from 'next/router'
+import Divider from '@mui/material/Divider';
 
 interface MenuCardProps {
   menus: Menu[];
@@ -45,9 +46,11 @@ export default function AlignItemsList({ menus, friends }: MenuCardProps) {
             Order Success!
         </Alert>
       </Snackbar>
-
-      {menus.map((menu) => (
-        <MenuListItem menu={menu} handleClickOpen={handleClickOpen} key={menu.id}/>
+      {menus.map((menu, index) => (
+        <div>
+          <MenuListItem menu={menu} handleClickOpen={handleClickOpen} key={menu.id}/>
+          {index !== menus.length - 1 && <Divider />}
+        </div>
       ))
       }
     </List>

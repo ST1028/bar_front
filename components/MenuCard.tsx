@@ -19,7 +19,7 @@ export default function RecipeReviewCard({ menus, friends, menuCategory }: MenuC
     <Card>
       <CardMedia
         component="img"
-        height="194"
+        height="370"
         image={menuCategory.thumbnail}
         alt="Paella dish"
       />

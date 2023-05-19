@@ -18,11 +18,15 @@ export default async function handler(
       }
     })
     const friends = await response.json()
-    res.status(200).json({ data: friends.data } as FriendsResponse)
+    if (response.status != 200) {
+      res.status(response.status).json({ data: [] })
+    } else {
+      res.status(200).json({ data: friends.data } as FriendsResponse)
+    }
   } else if(req.method == 'POST') {
     const body: FriendCreateRequest = JSON.parse(req.body);
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/friends/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/friends`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -7,8 +7,10 @@ import MenuCard from './MenuCard';
 import Container from '@mui/material/Container';
 import { useEffect, useState } from 'react'
 import { MenuCategoriesResponse } from '@/src/types/Responses/MenuCategoriesResponse'
-import { data } from 'autoprefixer';
 import { FriendsResponse } from '@/src/types/Responses/FriendsResponse';
+import SwipeableViews from 'react-swipeable-views';
+import { useTheme } from '@mui/material/styles';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,6 +47,7 @@ function a11yProps(index: number) {
   };
 }
 export default function BasicTabs() {
+  const theme = useTheme();
   // メニューカテゴリー取得
   const [menuCategories, setMenuCategories] = useState<MenuCategoriesResponse>({data: []});
   useEffect(() => {
@@ -71,6 +74,9 @@ export default function BasicTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const handleChangeIndex = (index: number) => {
+    setValue(index);
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -87,11 +93,17 @@ export default function BasicTabs() {
           ))}
         </Tabs>
       </Box>
-      {menuCategories.data.map((menuCategory, index) => (
-        <TabPanel value={value} index={index} key={menuCategory.id}>
-          <MenuCard menus={menuCategory.menus} friends={friends.data} menuCategory={menuCategory}/>
-        </TabPanel>
-      ))}
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        {menuCategories.data.map((menuCategory, index) => (
+          <TabPanel value={value} index={index} key={menuCategory.id}>
+            <MenuCard menus={menuCategory.menus} friends={friends.data} menuCategory={menuCategory}/>
+          </TabPanel>
+        ))}
+      </SwipeableViews>
     </Box>
   );
 }

@@ -19,7 +19,7 @@ export default function AlignItemsList({ menu, handleClickOpen }: MenuCardProps)
     };
   return (
     <ListItem alignItems="flex-start" sx={{paddingRight: 0, paddingLeft: 0}}>
-    <ListItemButton component="a" href="#simple-list" sx={{padding: 0}} onClick={handleClick}>
+    <ListItemButton component="a" sx={{padding: 0}} onClick={handleClick}>
         <ListItemAvatar>
         <Avatar alt={menu.name} src={menu.thumbnail} />
         </ListItemAvatar>

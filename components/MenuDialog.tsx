@@ -1,10 +1,6 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
+import Avatar from '@mui/material/Avatar';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -38,6 +34,9 @@ interface MenuCardProps {
 }
 
 export default function FullScreenDialog({ open, handleClose, selectedMenu, friends }: MenuCardProps) {
+  if (selectedMenu === null) {
+    return <></>;
+  }
   const onClose = () => {
     handleClose(false);
   };
@@ -47,37 +46,44 @@ export default function FullScreenDialog({ open, handleClose, selectedMenu, frie
   };
 
   return (
-    <div>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={onClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={onClose}
-              aria-label="close"
-            >
-              <CloseIcon/>
-            </IconButton>
-            <Typography sx={{ ml: 1, flex: 1 }} variant="h6" component="div">
-              {selectedMenu?.name}
-              <small style={{marginLeft: '10px'}}>¥{selectedMenu?.price}</small>
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Typography component="div" sx={{ p: 2 }}>
-          {selectedMenu ? (
-            <OrderStepper selectedMenu={selectedMenu} handleClose={onSnackBarViewClose} friends={friends}/>
-          ) : (
-            <div>メニューが選択されていません</div>
-          )}
-        </Typography>
-      </Dialog>
-    </div>
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={onClose}
+      TransitionComponent={Transition}
+    >
+      <AppBar sx={{ position: 'relative' }}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={onClose}
+            aria-label="close"
+          >
+            <CloseIcon/>
+          </IconButton>
+
+          <Avatar alt={selectedMenu.name} src={selectedMenu.thumbnail} />
+          <Typography
+            sx={{
+              ml: 1,
+              display: { md: 'flex' },
+              textDecoration: 'none',
+            }}
+          >
+            {selectedMenu?.name}
+            <small style={{marginLeft: '10px'}}>¥{selectedMenu?.price}</small>
+          </Typography>
+
+        </Toolbar>
+      </AppBar>
+      <Typography component="div" sx={{ p: 2 }}>
+        {selectedMenu ? (
+          <OrderStepper selectedMenu={selectedMenu} handleClose={onSnackBarViewClose} friends={friends}/>
+        ) : (
+          <div>メニューが選択されていません</div>
+        )}
+      </Typography>
+    </Dialog>
   );
 };

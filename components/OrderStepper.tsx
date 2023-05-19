@@ -13,6 +13,7 @@ import { Menu } from '@/src/types/Models/Menu';
 import { Friend } from '@/src/types/Models/Friend';
 import { ResultResponse } from '@/src/types/Responses/ResultResponse';
 import { OrderRequest } from '@/src/types/Requests/OrderRequest';
+import RemarksText from './RemarksText';
 
 interface FullScreenDialogProps {
   handleClose: (isSnackBar: boolean) => void;
@@ -21,6 +22,7 @@ interface FullScreenDialogProps {
 }
 
 export default function VerticalLinearStepper({ handleClose, selectedMenu, friends }: FullScreenDialogProps) {
+  const [remarksText, setRemarksText] = React.useState('');
   const [selectedFriendIds, setSelectedFriendIds] = React.useState([] as number[]);
   const [selectedBlendId, setSelectedBlendId] = React.useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
@@ -33,11 +35,13 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
     });
   };
 
-
   const steps = React.useMemo(() => {
     const baseSteps = [
       {
         label: 'Order Friends',
+      },
+      {
+        label: 'Remarks',
       },
       {
         label: 'Check',
@@ -53,7 +57,7 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
   }, [selectedMenu.blends]);
 
   async function fetchPostOrder() {
-    const body: OrderRequest = {menu_id: selectedMenu.id, friend_ids: selectedFriendIds, blend_id: selectedBlendId};
+    const body: OrderRequest = {menu_id: selectedMenu.id, friend_ids: selectedFriendIds, blend_id: selectedBlendId, remarks: remarksText};
     if (selectedMenu.blends.length == 0) {
       delete body.blend_id;
     }
@@ -64,12 +68,16 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
     const res: ResultResponse = await response.json();
   }
 
-  const handleNext = (stepIndex: number) => {
-    if (stepIndex == 0 && selectedFriendIds.length === 0) {
+  const handleNext = (stepIndex: number, stepLabel: string) => {
+    if (stepLabel == "Order Friends" && selectedFriendIds.length === 0) {
       handleStepError(stepIndex, true);
       return;
     }
-    if (stepIndex == 1 && selectedMenu.blends.length > 0 && selectedBlendId === 0) {
+    if (stepLabel == "Blending" && selectedMenu.blends.length > 0 && selectedBlendId === 0) {
+      handleStepError(stepIndex, true);
+      return;
+    }
+    if (stepLabel == "Remarks" && selectedMenu.is_remarks_required && remarksText === '') {
       handleStepError(stepIndex, true);
       return;
     }
@@ -103,7 +111,7 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
                   <Typography variant="caption" color="error">
                     Alert message
                   </Typography>
-                ) : index === 2 ? (
+                ) : index === (steps.length - 1) ? (
                   <Typography variant="caption">Last step</Typography>
                 ) : null
               }
@@ -112,9 +120,13 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
             </StepLabel>
             <StepContent>
               <Typography>
-                {index === 0 ? 
-                <SelectOrder setSelectedFriendIds={setSelectedFriendIds} selectedFriendIds={selectedFriendIds} friends={friends}/> : index === 1 ? 
-                <BlendRadio blends={selectedMenu.blends} selectedBlendId={selectedBlendId} setSelectedBlendId={setSelectedBlendId}/> : null}
+                {step.label == 'Order Friends' ? 
+                    <SelectOrder setSelectedFriendIds={setSelectedFriendIds} selectedFriendIds={selectedFriendIds} friends={friends}/> : 
+                  step.label == 'Blending' ? 
+                    <BlendRadio blends={selectedMenu.blends} selectedBlendId={selectedBlendId} setSelectedBlendId={setSelectedBlendId}/> : 
+                  step.label == 'Remarks' ? 
+                    <RemarksText remarksText={remarksText} setRemarksText={setRemarksText}/>: null
+                }
                 {index === (steps.length-1) ? 
                 <Typography>
                     <Typography>メニュー：{selectedMenu.name}</Typography>
@@ -126,6 +138,7 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
                       })
                       .join(', ')}
                     </Typography>
+                    <Typography>備考：{remarksText}</Typography>
                 </Typography>
                 : null}
               </Typography>
@@ -133,7 +146,7 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
                 <div>
                   <Button
                     variant="contained"
-                    onClick={handleNext.bind(null, index)}
+                    onClick={handleNext.bind(null, index, step.label)}
                     sx={{ mt: 1, mr: 1 }}
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Next'}

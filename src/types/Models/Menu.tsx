@@ -8,6 +8,7 @@ export interface Menu {
     status: number;
     blends: Blend[];
     thumbnail: string;
+    is_remarks_required: boolean;
     created_at: string;
     updated_at: string;
 }

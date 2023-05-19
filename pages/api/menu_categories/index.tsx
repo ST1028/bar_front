@@ -14,6 +14,11 @@ export default async function handler(
         'Authorization': `Bearer ${token}`
       }
     })
-    const menuCategories = await response.json()
-    res.status(200).json({ data: menuCategories.data })
+    if (response.status != 200) {
+      res.status(response.status).json({ data: [] })
+      
+    } else {
+      const menuCategories = await response.json()
+      res.status(200).json({ data: menuCategories.data })
+    }
 }
