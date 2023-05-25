@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import MenuList from './MenList';
+import MenuList from './MenuList';
 import { Menu } from '@/src/types/Models/Menu';
 import { Friend } from '@/src/types/Models/Friend';
 import { MenuCategory } from '@/src/types/Models/MenuCategory';
@@ -12,9 +12,11 @@ interface MenuCardProps {
   menus: Menu[];
   friends: Friend[];
   menuCategory: MenuCategory;
+  setSnackBarOpen: (open: boolean) => void;
+  loading: boolean;
 }
 
-export default function RecipeReviewCard({ menus, friends, menuCategory }: MenuCardProps) {
+export default function RecipeReviewCard({ menus, friends, menuCategory, setSnackBarOpen, loading }: MenuCardProps) {
   return (
     <Card>
       <CardMedia
@@ -31,9 +33,10 @@ export default function RecipeReviewCard({ menus, friends, menuCategory }: MenuC
       <CardContent sx={{paddingBottom: "0px !important"}}>
           <Typography paragraph>Menu</Typography>
           <Typography paragraph>
-            <MenuList menus={menus} friends={friends}/>
+            <MenuList menus={menus} friends={friends} setSnackBarOpen={setSnackBarOpen} loading={loading}/>
           </Typography>
         </CardContent>
+        
     </Card>
   );
 }

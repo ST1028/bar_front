@@ -43,7 +43,7 @@ export default function SignIn() {
       const myHeaders = new Headers();
       myHeaders.append('Authorization', 'Bearer ' + res.data.token);
 
-      router.push('/menus');
+      router.push('/');
     } catch (error) {
       setAlertOpen(true);
       setAlertMessage('アカウントまたはパスワードが誤ってます');

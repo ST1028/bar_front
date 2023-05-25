@@ -11,9 +11,11 @@ import Divider from '@mui/material/Divider';
 interface MenuCardProps {
   menus: Menu[];
   friends: Friend[];
+  setSnackBarOpen: (open: boolean) => void;
+  loading: boolean;
 }
 
-export default function AlignItemsList({ menus, friends }: MenuCardProps) {
+export default function MenuList({ menus, friends, setSnackBarOpen, loading }: MenuCardProps) {
   const [open, setOpen] = React.useState(false);
   const [selectedMenu, setSelectedMenu] = React.useState<Menu | null>(null);
   const router = useRouter()
@@ -33,22 +35,12 @@ export default function AlignItemsList({ menus, friends }: MenuCardProps) {
     setOpen(false);
   };
 
-  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
-  const handleSnackBarClose = () => {
-    setSnackBarOpen(false);
-  };
-
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <MenuDialog open={open} handleClose={handleClose} selectedMenu={selectedMenu} friends={friends}/>
-      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleSnackBarClose}>
-        <Alert onClose={handleSnackBarClose} severity="success" sx={{ width: '100%' }}>
-            Order Success!
-        </Alert>
-      </Snackbar>
       {menus.map((menu, index) => (
-        <div>
-          <MenuListItem menu={menu} handleClickOpen={handleClickOpen} key={menu.id}/>
+        <div key={index}>
+          <MenuListItem menu={menu} handleClickOpen={handleClickOpen} key={menu.id} loading={loading}/>
           {index !== menus.length - 1 && <Divider />}
         </div>
       ))

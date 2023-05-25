@@ -1,16 +1,18 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import MenuCard from './MenuCard';
 import Container from '@mui/material/Container';
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MenuCategoriesResponse } from '@/src/types/Responses/MenuCategoriesResponse'
 import { FriendsResponse } from '@/src/types/Responses/FriendsResponse';
-import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
+import OrderSnackBar from './OrderSnackBar';
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import type { Swiper as SwiperCore } from 'swiper';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +49,7 @@ function a11yProps(index: number) {
   };
 }
 export default function BasicTabs() {
+  const [loading, setLoading] = useState<boolean>(true);
   const theme = useTheme();
   // メニューカテゴリー取得
   const [menuCategories, setMenuCategories] = useState<MenuCategoriesResponse>({data: []});
@@ -55,6 +58,7 @@ export default function BasicTabs() {
         const response = await fetch('/api/menu_categories/');
         const res: MenuCategoriesResponse = await response.json();
         setMenuCategories(res);
+        setLoading(false);
       }
       fetchMenuCategories();
     }, []);
@@ -74,12 +78,30 @@ export default function BasicTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
+  const handleChangeIndex = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+    swiper?.slideTo(newValue);
+  };
+
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+  const handleSnackBarClose = () => {
+    setSnackBarOpen(false);
+  };
+  const playerRef = useRef<Player>(null);
+  const [modalOpen, setModalOpen] = React.useState(true);
+
+  const [swiper, setSwiper] = React.useState<SwiperCore | null>(null);
+  const onSwiper = (currentSwiper: SwiperCore) => {
+    const swiperInstance = currentSwiper;
+    setSwiper(swiperInstance);
+  };
+  const onSlideChange = (currentSwiper: SwiperCore) => {
+    setValue(currentSwiper.activeIndex);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
+      <OrderSnackBar snackBarOpen={snackBarOpen} handleSnackBarClose={handleSnackBarClose}/>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs 
           value={value} 
@@ -93,17 +115,25 @@ export default function BasicTabs() {
           ))}
         </Tabs>
       </Box>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
+      <Swiper
+        simulateTouch={false}
+        onSwiper={onSwiper}
+        onSlideChange={onSlideChange}
       >
         {menuCategories.data.map((menuCategory, index) => (
-          <TabPanel value={value} index={index} key={menuCategory.id}>
-            <MenuCard menus={menuCategory.menus} friends={friends.data} menuCategory={menuCategory}/>
-          </TabPanel>
+          <SwiperSlide key={index}>
+            <TabPanel value={value} index={index} key={menuCategory.id}>
+              <MenuCard 
+                menus={menuCategory.menus} 
+                friends={friends.data} 
+                menuCategory={menuCategory} 
+                setSnackBarOpen={setSnackBarOpen}
+                loading={loading}
+              />
+            </TabPanel>
+          </SwiperSlide>
         ))}
-      </SwipeableViews>
+      </Swiper>
     </Box>
   );
 }

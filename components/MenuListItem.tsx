@@ -7,13 +7,15 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Menu } from '@/src/types/Models/Menu';
+import Skeleton from '@mui/material/Skeleton';
 
 interface MenuCardProps {
   menu: Menu;
   handleClickOpen: (menu: Menu) => void;
+  loading: boolean;
 }
 
-export default function AlignItemsList({ menu, handleClickOpen }: MenuCardProps) {
+export default function AlignItemsList({ menu, handleClickOpen, loading }: MenuCardProps) {
     const handleClick = () => {
         handleClickOpen(menu);
     };
@@ -21,7 +23,7 @@ export default function AlignItemsList({ menu, handleClickOpen }: MenuCardProps)
     <ListItem alignItems="flex-start" sx={{paddingRight: 0, paddingLeft: 0}}>
     <ListItemButton component="a" sx={{padding: 0}} onClick={handleClick}>
         <ListItemAvatar>
-        <Avatar alt={menu.name} src={menu.thumbnail} />
+          {loading ? <Skeleton animation="wave" variant="circular" width={40} height={40} /> : <Avatar alt={menu.name} src={menu.thumbnail} />}
         </ListItemAvatar>
         <ListItemText
         primary={menu.name}

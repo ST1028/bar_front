@@ -6,9 +6,9 @@ import { parseCookies, hasToken } from '@/src/methods/cookie';
 
 export default function FixedBottomNavigation() {
   return (
-      <MainLayout>
+      <div>
         <Main/>
-      </MainLayout>
+      </div>
   );
 }
 
