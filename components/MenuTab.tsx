@@ -77,6 +77,7 @@ export default function BasicTabs() {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    swiper?.slideTo(newValue);
   };
   const handleChangeIndex = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
