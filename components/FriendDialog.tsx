@@ -33,7 +33,7 @@ export default function FormDialog({open, setOpen, fetchFriends}: FriendDialogPr
   };
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle>Add Friend's</DialogTitle>
+        <DialogTitle>Add Friend</DialogTitle>
         <DialogContent>
             <TextField
             autoFocus
