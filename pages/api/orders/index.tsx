@@ -16,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const orders: OrdersResponse = await response.json()
         res.status(200).json({ data: orders.data })
     } else if (req.method == 'POST') {
+        console.log("step1")
         const body: OrderRequest = JSON.parse(req.body);
+        console.log("step2")
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
                 method: 'POST',
@@ -35,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(200).json({data: data.data});
 
         } catch (error) {
+            console.log(error)
             res.status(500).json({ message: 'An error occurred.', error: error });
         }
     } else {
