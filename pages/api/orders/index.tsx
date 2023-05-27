@@ -22,6 +22,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const body: OrderRequest = JSON.parse(req.body);
         logger.warn('step2')
         logger.warn(body)
+        logger.warn(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`)
+        logger.warn(`${token}`)
+        logger.warn({
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        })
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
                 method: 'POST',
