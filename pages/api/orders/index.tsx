@@ -18,12 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const orders: OrdersResponse = await response.json()
         res.status(200).json({ data: orders.data })
     } else if (req.method == 'POST') {
-        logger.warn('step1')
         const body: OrderRequest = JSON.parse(req.body);
-        logger.warn('step2')
-        logger.warn(body)
-        logger.warn(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`)
-        logger.warn(`${token}`)
         logger.warn({
             method: 'POST',
             headers: {
@@ -41,17 +36,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 },
                 body: JSON.stringify(body)
             })
-            logger.warn('step3')
 
             if (!response.ok) {
                 throw new Error('Response was not ok');
             }
-            logger.warn('step4')
 
             const data: ResultResponse = await response.json();
-            logger.warn('step5')
             res.status(200).json({data: data.data});
-
         } catch (error) {
             logger.warn(error)
             res.status(500).json({ message: 'An error occurred.', error: error });
