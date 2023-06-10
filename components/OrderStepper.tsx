@@ -130,7 +130,7 @@ export default function VerticalLinearStepper({ handleClose, selectedMenu, frien
                 {index === (steps.length-1) ? 
                 <Typography>
                     <Typography>メニュー：{selectedMenu.name}</Typography>
-                    {selectedMenu.blends.length > 0 ? <Typography>ブレンド：{selectedMenu.blends[0].name}</Typography> : null}
+                    {selectedMenu.blends.length > 0 ? <Typography>ブレンド：{selectedMenu.blends.find((blend) => blend.id == selectedBlendId)?.name}</Typography> : null}
                     <Typography>注文者：{selectedFriendIds
                       .map((id) => {
                           const friend = friends.find((friend) => friend.id === id);

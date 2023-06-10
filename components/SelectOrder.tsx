@@ -52,7 +52,6 @@ export default function SelectOrder({ friends, selectedFriendIds, setSelectedFri
               const friend = friends.find((friend) => friend.id === id);
               return friend ? friend.name : '';
             });
-        
             // 名前の配列を連結して表示
             return selectedNames.join(', ');
           }}
